@@ -21,30 +21,43 @@
                         <div class="card card-plain">
                             <div class="card-header pb-0 text-left">
                                 @if ($kondisiModal == 'tambah')
-                                    <h5 class="font-weight-bolder text-center text-info text-gradient">Tambah Fitur
+                                    <h5 class="font-weight-bolder text-center text-info text-gradient">Tambah Kategori
                                     </h5>
                             </div>
                             <div class="card-body">
-                                <form role="form text-left" wire:submit.prevent="tambahFitur"
+                                <form role="form text-left" wire:submit.prevent="tambahKategori"
                                     enctype="multipart/form-data">
                                 @else
-                                    <h5 class="font-weight-bolder text-center text-warning text-gradient">Update Fitur
+                                    <h5 class="font-weight-bolder text-center text-warning text-gradient">Update Kategori
                                     </h5>
                             </div>
                             <div class="card-body">
-                                <form role="form text-left" wire:submit.prevent="updateFitur"
+                                <form role="form text-left" wire:submit.prevent="updateKategori"
                                     enctype="multipart/form-data">
                                     @endif
                                     @csrf
                                     <div class="">
-                                        <label>Nama</label>
+                                        <label>Judul</label>
                                         <div class="input-group">
                                             <input type="text"
-                                                class="form-control @error('nama') is-invalid @enderror"
-                                                wire:model="nama" placeholder="Nama" aria-label="Nama"
-                                                name="nama">
+                                                class="form-control @error('title') is-invalid @enderror"
+                                                wire:model="title" placeholder="Judul" aria-label="Judul"
+                                                name="title">
                                         </div>
-                                        @error('nama')
+                                        @error('title')
+                                            <span class="text-danger"
+                                                style="font-size:0.7rem !important;">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="">
+                                        <label>Deskripsi</label>
+                                        <div class="input-group">
+                                            <textarea
+                                                class="form-control @error('deskripsi') is-invalid @enderror"
+                                                wire:model="deskripsi" placeholder="Deskripsi" aria-label="Deskripsi"
+                                                name="deskripsi"></textarea>
+                                        </div>
+                                        @error('deskripsi')
                                             <span class="text-danger"
                                                 style="font-size:0.7rem !important;">{{ $message }}</span>
                                         @enderror
@@ -127,8 +140,13 @@
                         <img src="" id="srcPreviewImage" style="width: 100%">
                     </div>
                     <div class="modal-footer">
+                        @if ($kondisiModal == 'update')
+                            <button type="button" class="btn bg-gradient-secondary" data-bs-target="#updateKategori"
+                                data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                        @else
                             <button type="button" class="btn bg-gradient-secondary" data-bs-target="#modalFitur"
                                 data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -142,7 +160,9 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul
+                        </th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi
                         </th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gambar
                         </th>
@@ -165,7 +185,14 @@
                             <td>
                                 <div class="d-flex px-2">
                                     <div class="my-auto">
-                                        <h6 class="mb-0 text-md">{{ $d->nama }}</h6>
+                                        <h6 class="mb-0 text-md">{{ $d->title }}</h6>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex px-2">
+                                    <div class="my-auto">
+                                        <h6 class="mb-0 text-md">{{ $d->deskripsi }}</h6>
                                     </div>
                                 </div>
                             </td>

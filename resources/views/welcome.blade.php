@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 
     <!-- Styles -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="{{ asset('assets/css/custom-style-bagas.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
@@ -29,10 +30,11 @@
 
             <nav class="navbar shadow-none navbar-expand-lg bg-warning px-0 mx-4">
                 <div class="container-fluid">
-
                     <div class="navbar-brand bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5 d-flex">
-                        <img src="https://gas.id/files/images/srvphp_1662943062.png" class="navbar-brand-img">
-                        <span class="h2 m-0 align-items-center d-flex">title</span>
+                        <img src="{{ isset($info->logo_web) ? $info->logo_web : 'https://gas.id/files/images/srvphp_1662943062.png' }}"
+                            class="navbar-brand-img">
+                        <span
+                            class="h2 m-0 align-items-center d-flex">{{ isset($info->nama_website) ? $info->nama_website : 'Title' }}</span>
                     </div>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,19 +45,19 @@
                     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul class="navbar-nav align-items-center">
                             <li class="nav-item">
-                                <a class="h6 mx-3 active" aria-current="page" href="#">Home</a>
+                                <a class="h6 mx-3 text-uppercase active" aria-current="page" href="#">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="h6 mx-3" href="#">fitur</a>
+                                <a class="h6 mx-3 text-uppercase" href="#">fitur</a>
                             </li>
                             <li class="nav-item">
-                                <a class="h6 mx-3" href="#">kategori</a>
+                                <a class="h6 mx-3 text-uppercase" href="#">kategori</a>
                             </li>
                             <li class="nav-item">
-                                <a class="h6 mx-3">lokasi</a>
+                                <a class="h6 mx-3 text-uppercase">lokasi</a>
                             </li>
                             <li class="nav-item">
-                                <a class="h6 mx-3">about</a>
+                                <a class="h6 mx-3 text-uppercase">about</a>
                             </li>
                         </ul>
                     </div>
@@ -65,218 +67,147 @@
                 </div>
             </nav>
 
-            <div class=" container">
+            <div class=" container py-4">
                 <div class="d-flex flex-row">
                     <div class="d-flex align-items-center row flex-reverse">
                         <div class="col-md-6 text-left">
-                            <h1 class="text-white">Bergabung</h1>
-                            <span class="text-dark">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</span>
+                            <h1 class="text-white">{{ isset($info->title) ? $info->title : 'Judul utama' }}</h1>
+                            <span
+                                class="text-dark">{{ isset($info->deskripsi) ? $info->deskripsi : 'Deskripsi Judul utama' }}</span>
                         </div>
                         <div class="col-md-6">
-                            <img src="{{ asset('assets/img/top.jpg') }}" class="img-custom-mode img-fluid">
+                            <img src="{{ isset($info->gambar) ? $info->gambar : asset('assets/img/top.jpg') }}"
+                                class="img-custom-mode img-fluid">
                         </div>
                     </div>
                 </div>
 
-                <div class="icon py-3">
-                    <a class="uil uil-instagram h4 text-white" href="#"></a>
-                    <a class="uil uil-facebook h4 text-white " href="#"></a>
+                <div class="icon py-5">
+                    @foreach ($sosmed as $sm)
+                        @if ($sm->app == 'fb' && $sm->link !== '')
+                            <a class="uil uil-facebook h3 mx-1 text-white " href="{{ $sm->link }}"></a>
+                        @elseif ($sm->app == 'twt' && $sm->link !== '')
+                            <a class="uil uil-twitter h3 mx-1 text-white " href="{{ $sm->link }}"></a>
+                        @elseif ($sm->app == 'yt' && $sm->link !== '')
+                            <a class="uil uil-youtube h3 mx-1 text-white " href="{{ $sm->link }}"></a>
+                        @elseif($sm->app == 'ig' && $sm->link !== '')
+                            <a class="uil uil-instagram h3 mx-1 text-white" href="{{ $sm->link }}"></a>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </section>
 
-        {{-- tampilan kedua --}}
-        <section id="fitur" class="my-5">
+        {{-- tampilan Fitur --}}
+        <section id="fitur" data-aos="zoom-out-up" data-aos-delay="600" data-aos-duration="3000" class="py-8">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="">POPULER FITUR</h2>
-                    <h6>Beberapa kategori </h6>
+                    <h2 class="text-uppercase">POPULER FITUR</h2>
+                    <h6>Beberapa Fitur Kami </h6>
                 </div>
 
                 <div class="row d-flex justify-content-center">
-                    <div class="col-md-2 text-center">
-                        <div class="card my-3 shadow-md border-radius-xl">
-                            <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                class="img-fluid img-card-fitur px-2">
+                    @foreach ($fitur as $f)
+                        <div class="col-md-2 text-center">
+                            <div class="card my-3 shadow-md border-radius-xl">
+                                <img src="{{ asset($f->gambar) }}" class="img-fluid img-card-fitur px-2">
+                            </div>
+                            <span class="h6">{{ $f->nama }}</span>
                         </div>
-                        <span class="h6">Kategori 1</span>
-                    </div>
+                    @endforeach
 
-                    <div class="col-md-2 text-center">
-                        <div class="card my-3 shadow-md border-radius-xl">
-                            <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                class="img-fluid img-card-fitur px-2">
-                        </div>
-                        <span class="h6">Kategori 1</span>
-                    </div>
-
-                    <div class="col-md-2 text-center">
-                        <div class="card my-3 shadow-md border-radius-xl">
-                            <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                class="img-fluid img-card-fitur px-2">
-                        </div>
-                        <span class="h6">Kategori 1</span>
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <div class="card my-3 shadow-md border-radius-xl">
-                            <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                class="img-fluid img-card-fitur px-2">
-                        </div>
-                        <span class="h6">Kategori 1</span>
-                    </div>
                 </div>
             </div>
         </section>
 
-        {{-- tampilan ketiga --}}
-        <section id="kategori" class="my-5">
+        {{-- tampilan KATEGORI --}}
+        <section id="kategori" data-aos="zoom-in-up" data-aos-delay="600" data-aos-duration="3000" class="py-8">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="">Kategoti</h2>
-                    <h6>Beberapa kategori </h6>
+                    <h2 class="text-uppercase">Kategori</h2>
+                    <h6>Daftar kategori kami</h6>
                 </div>
 
-                <div class="list-group overflow-auto list-group-horizontal">
-                    <div class="  mx-2">
-                        <div class="card my-3 shadow-md">
-                            <div class="card-header">
-                                <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                    class="img-fluid img-card-fitur">
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex flex-column">
-                                    <span class="h6">Kategori 1</span>
-                                    <span class="">Lorem ipsum dolor sit amet consectetur.</span>
+                <div class="list-group overflow-auto list-group-horizontal d-flex justify-content-center">
+                    @foreach ($kategori as $k)
+                        <div class="col-md-2  mx-3 d-flex align-items-stretch">
+                            <div class="card my-3 shadow-md">
+                                <div class="card-header">
+                                    <img src="{{ $k->gambar }}" class="img-fluid img-card-fitur">
+                                </div>
+                                <div class="card-body d-flex align-items-center">
+                                    <div class="d-flex flex-column">
+                                        <span class="h6">{{ $k->title }}</span>
+                                        <span class="wrap-anywhere">{{ $k->deskripsi }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="  mx-2">
-                        <div class="card my-3 shadow-md">
-                            <div class="card-header">
-                                <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                    class="img-fluid img-card-fitur">
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex flex-column">
-                                    <span class="h6">Kategori 1</span>
-                                    <span class="">Lorem ipsum dolor sit amet consectetur.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="  mx-2">
-                        <div class="card my-3 shadow-md">
-                            <div class="card-header">
-                                <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                    class="img-fluid img-card-fitur">
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex flex-column">
-                                    <span class="h6">Kategori 1</span>
-                                    <span class="">Lorem ipsum dolor sit amet consectetur.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="  mx-2">
-                        <div class="card my-3 shadow-md">
-                            <div class="card-header">
-                                <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                    class="img-fluid img-card-fitur">
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex flex-column">
-                                    <span class="h6">Kategori 1</span>
-                                    <span class="">Lorem ipsum dolor sit amet consectetur.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class=" ">
-                        <div class="card my-3 shadow-md">
-                            <div class="card-header">
-                                <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                    class="img-fluid img-card-fitur">
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex flex-column">
-                                    <span class="h6">Kategori 1</span>
-                                    <span class="">Lorem ipsum dolor sit amet consectetur.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
 
-        <section id="lokasi" class="my-5 text-center container">
-            <h1>lokasi kami</h1>
-            <div class="ratio ratio-21x9 ">
-
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7911.47275402587!2d110.57543399528495!3d-7.494331232856047!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a6e5767782227%3A0xdd4612e99e1629ba!2sDusun%203%2C%20Penggung%2C%20Boyolali%2C%20Boyolali%20Regency%2C%20Central%20Java!5e0!3m2!1sen!2sid!4v1688475451278!5m2!1sen!2sid"
-                    style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-            {{-- MAPS INSRT FULL I FRAME TAPI MENGKO DI PARSING DI JUPUK SRC --}}
+        <section  class="container py-8">
+            @foreach ($gambar as $img)
+                <div data-aos="{{ $loop->even ? 'zoom-out-up' : 'zoom-in-right' }}" data-aos-delay="600" data-aos-duration="3000" class="d-flex flex-row py-6">
+                    <div class="d-flex align-items-center row flex-reverse {{ $img->tampilan == 1 ? 'flex-row-reverse' : '' }}">
+                        <div class="col-md-6 d-flex {{ $img->tampilan == 1 ? 'justify-content-end' : 'justify-content-start' }}">
+                            <span class="text-dark h1">{{ $img->judul ? $img->judul : 'Judul utama' }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="{{ $img->gambar ? $img->gambar : asset('assets/img/top.jpg') }}"
+                                class="img-custom-mode img-fluid">
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </section>
 
-        <section id='about' class="text-center container my-5">
-            <h2>Tentang Kami</h2>
-            <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque sunt natus vero repudiandae eaque illo
-                vitae.</span>
+        @if (isset($info->maps))
+            <section id="lokasi" data-aos="zoom-in-up" data-aos-duration="3000" data-aos-delay="600"  class="py-9 text-center container">
+                <h2 class="text-uppercase">lokasi kami</h2>
+                <div class="ratio ratio-21x9 ">
+
+                    <iframe src="{{ $info->maps }}" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </section>
+        @endif
+
+        <section id='about' data-aos="zoom-in-down" data-aos-delay="600" data-aos-duration="3000" class="text-center container py-9">
+            <h2 class="text-uppercase">Tentang Kami</h2>
+            <span>{{ isset($info->about_us) ? $info->about_us : 'Deskripsikan Perusahaan anda' }}</span>
 
         </section>
 
-        <section id='kata' class="text-center container my-5">
-            <h2>Kata2</h2>
-            <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque sunt natus vero repudiandae eaque illo
-                vitae.</span>
+        <section id='kata' data-aos="zoom-in-right" data-aos-duration="3000" class="text-center container py-9">
+            <h2 class="text-uppercase">{{ $slogan->judul ? $slogan->judul : 'Isi Slogannya' }}</h2>
+            <span>{{ $slogan->text ? $slogan->text : 'Isi deskripsi Slogannya' }}</span>
 
         </section>
 
-        <section id='penutup' class="text-center container my-5">
+        <section id='penutup' data-aos="zoom-out" data-aos-duration="3000" class="text-center container py-9">
             <div class="row d-flex justify-content-center">
-                <div class="col-md-6">
-                    <div class="card-plain d-flex">
-                        <div class="">
-                            <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                class="img-fluid img-card-penutup">
-                        </div>
-                        <div class="text-start">
-                            <h6>judul</h6>
-                            <span>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, nobis esse adipisci
-                                beatae soluta blanditiis nemo fuga optio quidem alias nostrum sunt explicabo neque?
-                            </span>
-                            <button class="float-end btn-sm btn btn-warning bg-gradient-warning">Lihat
-                                selengkapnya</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card-plain d-flex">
-                        <div class="">
-                            <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                class="img-fluid img-card-penutup">
-                        </div>
-                        <div class="text-start">
-                            <h6>judul</h6>
-                            <span>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, nobis esse adipisci
-                                beatae soluta blanditiis nemo fuga optio quidem alias nostrum sunt explicabo neque?
-                            </span>
-                            <button class="float-end btn-sm btn btn-warning bg-gradient-warning">Lihat
-                                selengkapnya</button>
+                @foreach ($layanan as $lay)
+                    <div class="col-md-6">
+                        <div class="card-plain d-flex">
+                            <div class="">
+                                <img src="{{ $lay->gambar ? $lay->gambar : 'https://gas.id/files/images/srvphp_1662943062.png' }}"
+                                    class="img-fluid img-card-penutup">
+                            </div>
+                            <div class="text-start">
+                                <h6>{{ $lay->title ? $lay->title : 'Default Layanan Title' }}</h6>
+                                <span>
+                                    {{ $lay->deskripsi ? $lay->deskripsi : 'Default Layanan deskripsi' }}
+                                </span>
+                                <button class="float-end btn-sm btn btn-warning bg-gradient-warning">Lihat
+                                    selengkapnya</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
             </div>
         </section>
 
@@ -344,11 +275,12 @@
                                 class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4 align-items-center d-flex justify-content-center">
                                 <!-- Content -->
                                 <div class="d-flex jystify-content-center">
-                                    <img src="https://gas.id/files/images/srvphp_1662943062.png"
-                                        class="navbar-brand-img mx-2">
+                                    <img src="{{ isset($info->logo_web) ? $info->logo_web : 'https://gas.id/files/images/srvphp_1662943062.png' }}"
+                                        class="img-card-penutup mx-2">
                                     <div class="align-items-center d-flex ">
 
-                                        <span class="h2 m-0 text-white">title</span>
+                                        <span
+                                            class="h2 m-0 text-white">{{ isset($info->nama_website) ? $info->nama_website : 'Title' }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -360,13 +292,7 @@
                                 <h6 class="text-uppercase mb-3 text-white">Tentang Kami</h6>
                                 <div class="d-flex flex-column">
                                     <span>
-                                        <a href="#!" class="text-white">MDBootstrap</a>
-                                    </span>
-                                    <span>
-                                        <a href="#!" class="text-white">BrandFlow</a>
-                                    </span>
-                                    <span>
-                                        <a href="#!" class="text-white">Bootstrap Angular</a>
+                                        <a href="#!" class="text-white">Syarat dan ketentuan</a>
                                     </span>
                                 </div>
                             </div>
@@ -377,7 +303,7 @@
                                 <!-- Links -->
                                 <h6 class="text-uppercase mb-3 text-white">Hubungi Kami</h6>
                                 <span>
-                                    <a href="#!" class="text-white">MDBootstrap</a>
+                                    <a href="#!" class="text-white">Saran dan Kritik</a>
                                 </span>
                             </div>
                             <!-- Grid column -->
@@ -386,12 +312,19 @@
                             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 ">
                                 <!-- Links -->
                                 <h6 class="text-uppercase mb-3 text-white">Follow Kami</h6>
-                                <span>
-                                    <a href="#!" class="uil uil-facebook h4 text-white"></a>
-                                </span>
-                                <span>
-                                    <a href="#!" class=" uil uil-instagram h4 text-white"></a>
-                                </span>
+
+                                @foreach ($sosmed as $sm)
+                                    @if ($sm->app == 'fb' && $sm->link !== '')
+                                        <a class="uil uil-facebook h3 text-info " href="{{ $sm->link }}"></a>
+                                    @elseif ($sm->app == 'twt' && $sm->link !== '')
+                                        <a class="uil uil-twitter h3 text-info " href="{{ $sm->link }}"></a>
+                                    @elseif ($sm->app == 'yt' && $sm->link !== '')
+                                        <a class="uil uil-youtube h3 text-danger " href="{{ $sm->link }}"></a>
+                                    @elseif($sm->app == 'ig' && $sm->link !== '')
+                                        <a class="uil uil-instagram h3 text-primary text-gradient"
+                                            href="{{ $sm->link }}"></a>
+                                    @endif
+                                @endforeach
                             </div>
                             <!-- Grid column -->
 
@@ -412,15 +345,18 @@
 
                 <!-- Copyright -->
                 <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-                    © 2020 Copyright:
-                    <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+                    © 2023 Copyright:
+                    <a class="text-white" href="https://mdbootstrap.com/">Bagas Wihant</a>
                 </div>
                 <!-- Copyright -->
             </footer>
 
         </section>
     </main>
-
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+          AOS.init();
+        </script>
 </body>
 
 </html>

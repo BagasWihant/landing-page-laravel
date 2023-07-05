@@ -15,9 +15,44 @@ class AdminController extends Controller
         $data = array('title' => 'Admin');
         return view('admin/home',$data);
     }
+
+
     public function fitur()
     {
-        $data = array('title' => 'fitur');
+        $data = array('title' => 'Fitur');
         return view('admin/fitur',$data);
     }
+
+    public function kategori()
+    {
+        $data = array('title' => 'Kategori');
+        return view('admin/kategori',$data);
+    }
+
+    public function detail()
+    {
+        $data = array('title' => 'Web Detail');
+        return view('admin/detail',$data);
+    }
+
+    public function slogan()
+    {
+        $data = array('title' => 'Slogan ');
+        return view('admin/slogan',$data);
+    }
+
+    public function layanan()
+    {
+        $data = array('title' => 'Layanan Kami ');
+        return view('admin/layanan',$data);
+    }
+
+    public function gambar()
+    {
+        $data = array('title' => 'Gambar ');
+        return view('admin/gambar-pemanis',$data);
+    }
+
+
+
 }

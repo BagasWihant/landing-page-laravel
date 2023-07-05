@@ -5,25 +5,27 @@ namespace App\Http\Livewire\Admin;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-use App\Models\Fitur as ModelsFitur;
 use Illuminate\Support\Facades\File;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Models\GambarPemanis as ModelsGambarPemanis;
 
-class Fitur extends Component
+class GambarPemanis extends Component
 {
+
     use WithPagination;
     use WithFileUploads;
     use LivewireAlert;
 
     protected $listeners = ['deleteAksi'];
 
-    public $iteration,$image,$oldImage,$nama,$status,$fitur_id;
+    public $iteration,$image,$oldImage,$judul,$status,$fitur_id,$tampilan;
     public $kondisiModal='tambah',$fiturData;
 
     public function clearForm(){
         $this->kondisiModal = 'tambah';
         $this->status = 1;
-        $this->nama = '';
+        $this->tampilan = 1;
+        $this->judul = '';
         $this->image = null;
         $this->oldImage = null;
         $this->fiturData = null;
@@ -33,14 +35,15 @@ class Fitur extends Component
     public function tambahFitur(){
         $this->validate([
             'image' => 'nullable|image',
-            'nama' => 'required',
+            'judul' => 'required',
         ]);
         $image = '';
         if ($this->image != null) {
             $image = $this->image->storePublicly('upload/fitur', 'real_public');
         }
-        ModelsFitur::create([
-            'nama' => $this->nama,
+        ModelsGambarPemanis::create([
+            'judul' => $this->judul,
+            'tampilan' => $this->tampilan,
             'gambar' => $image,
             'status' => $this->status == true ? 1 : 0,
         ]);
@@ -65,10 +68,10 @@ class Fitur extends Component
     public function updateFitur(){
         $this->validate([
             'image' => 'nullable|image',
-            'nama' => 'required',
+            'judul' => 'required',
         ]);
-        $fitur = ModelsFitur::where('id', $this->fitur_id)->first();
-        $fitur->nama = $this->nama;
+        $fitur = ModelsGambarPemanis::where('id', $this->fitur_id)->first();
+        $fitur->judul = $this->judul;
         if ($this->image != null) {
             if (File::exists(public_path($fitur->gambar))) {
                 File::delete(public_path($fitur->gambar));
@@ -77,6 +80,7 @@ class Fitur extends Component
             $fitur->gambar = $image;
         }
         $fitur->status = $this->status == true ? 1 : 0;
+        $fitur->tampilan = $this->tampilan;
         $fitur->update();
         $this->iteration++;
         $this->clearForm();
@@ -97,9 +101,10 @@ class Fitur extends Component
 
 
     function getID($id,$del = null){
-        $this->fiturData = ModelsFitur::where('id', $id)->first();
+        $this->fiturData = ModelsGambarPemanis::where('id', $id)->first();
         $this->fitur_id = $this->fiturData->id;
-        $this->nama = $this->fiturData->nama;
+        $this->judul = $this->fiturData->judul;
+        $this->tampilan = $this->fiturData->tampilan;
         $this->status = $this->fiturData->status;
         $this->kondisiModal = 'update';
         $this->oldImage = $this->fiturData->gambar;
@@ -150,10 +155,9 @@ class Fitur extends Component
         $this->clearForm();
     }
 
-
     public function render()
     {
-        $data = ModelsFitur::orderBy('created_at', 'DESC')->paginate(10);
-        return view('livewire.admin.fitur', compact('data'));
+        $data = ModelsGambarPemanis::orderBy('created_at', 'DESC')->paginate(10);
+        return view('livewire.admin.gambar-pemanis',compact('data'));
     }
 }

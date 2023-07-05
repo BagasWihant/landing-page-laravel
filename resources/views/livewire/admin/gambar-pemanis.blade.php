@@ -4,7 +4,7 @@
         <button class="btn btn-icon btn-3 bg-gradient-info" type="button" data-bs-toggle="modal"
             data-bs-target="#modalFitur">
             <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-            <span class="btn-inner--text"> Fitur</span>
+            <span class="btn-inner--text"> Gambar</span>
         </button>
         <!-- Modal tambah kategori-->
         <div wire:ignore.self class="modal fade" id="modalFitur" tabindex="-1" role="dialog" data-bs-backdrop="static"
@@ -21,14 +21,14 @@
                         <div class="card card-plain">
                             <div class="card-header pb-0 text-left">
                                 @if ($kondisiModal == 'tambah')
-                                    <h5 class="font-weight-bolder text-center text-info text-gradient">Tambah Fitur
+                                    <h5 class="font-weight-bolder text-center text-info text-gradient">Tambah Gambar
                                     </h5>
                             </div>
                             <div class="card-body">
                                 <form role="form text-left" wire:submit.prevent="tambahFitur"
                                     enctype="multipart/form-data">
                                 @else
-                                    <h5 class="font-weight-bolder text-center text-warning text-gradient">Update Fitur
+                                    <h5 class="font-weight-bolder text-center text-warning text-gradient">Update Gambar
                                     </h5>
                             </div>
                             <div class="card-body">
@@ -37,18 +37,18 @@
                                     @endif
                                     @csrf
                                     <div class="">
-                                        <label>Nama</label>
+                                        <label>Judul</label>
                                         <div class="input-group">
                                             <input type="text"
-                                                class="form-control @error('nama') is-invalid @enderror"
-                                                wire:model="nama" placeholder="Nama" aria-label="Nama"
-                                                name="nama">
+                                                class="form-control @error('judul') is-invalid @enderror"
+                                                wire:model="judul" placeholder="Judul" aria-label="judul" name="judul">
                                         </div>
-                                        @error('nama')
+                                        @error('judul')
                                             <span class="text-danger"
                                                 style="font-size:0.7rem !important;">{{ $message }}</span>
                                         @enderror
                                     </div>
+
                                     <div class="row">
                                         <div class="col-md-8">
                                             <label>Image</label>
@@ -66,27 +66,42 @@
                                         <div class="col-md-4 align-self-center">
                                             <div class="d-flex justify-content-between">
                                                 @if ($oldImage != null)
-                                                <div class="d-flex flex-column text-center">
+                                                    <div class="d-flex flex-column text-center">
 
-                                                    <img src="{{ asset($oldImage) }}" alt="previewADD"
-                                                    onclick="previewImage('{{ asset($oldImage) }}')"
-                                                    class="avatar rounded" data-bs-target="#previewImage"
-                                                    data-bs-toggle="modal" data-bs-dismiss="modal">
-                                                    @if($image !=null)
-                                                    <span class="text-danger">Lama</span>
-                                                    @endif
-                                                </div>
+                                                        <img src="{{ asset($oldImage) }}" alt="previewADD"
+                                                            onclick="previewImage('{{ asset($oldImage) }}')"
+                                                            class="avatar rounded" data-bs-target="#previewImage"
+                                                            data-bs-toggle="modal" data-bs-dismiss="modal">
+                                                        @if ($image != null)
+                                                            <span class="text-danger">Lama</span>
+                                                        @endif
+                                                    </div>
                                                 @endif
                                                 @if ($image != null)
-                                                <div class="d-flex flex-column text-center">
-                                                    <img src="{{ $image->temporaryUrl() }}" alt="previewADD"
-                                                    onclick="previewImage('{{ $image->temporaryUrl() }}')"
-                                                    class="avatar rounded" data-bs-target="#previewImage"
-                                                    data-bs-toggle="modal" data-bs-dismiss="modal">
-                                                    <span class="text-success">New</span>
-                                                </div>
+                                                    <div class="d-flex flex-column text-center">
+                                                        <img src="{{ $image->temporaryUrl() }}" alt="previewADD"
+                                                            onclick="previewImage('{{ $image->temporaryUrl() }}')"
+                                                            class="avatar rounded" data-bs-target="#previewImage"
+                                                            data-bs-toggle="modal" data-bs-dismiss="modal">
+                                                        <span class="text-success">New</span>
+                                                    </div>
                                                 @endif
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-3">
+                                        <div class="d-flex">
+
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" wire:model='tampilan' type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+                                                    <label class="form-check-label" for="inlineRadio1">Gambar di Kiri</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" wire:model='tampilan' type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+                                                    <label class="form-check-label" for="inlineRadio2">Gambar di Kanan</label>
+                                                  </div>
+
                                         </div>
                                     </div>
 
@@ -127,8 +142,8 @@
                         <img src="" id="srcPreviewImage" style="width: 100%">
                     </div>
                     <div class="modal-footer">
-                            <button type="button" class="btn bg-gradient-secondary" data-bs-target="#modalFitur"
-                                data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn bg-gradient-secondary" data-bs-target="#modalFitur"
+                            data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -143,6 +158,8 @@
                     <tr>
                         <th></th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama
+                        </th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Posisi Gambar
                         </th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gambar
                         </th>
@@ -165,7 +182,14 @@
                             <td>
                                 <div class="d-flex px-2">
                                     <div class="my-auto">
-                                        <h6 class="mb-0 text-md">{{ $d->nama }}</h6>
+                                        <h6 class="mb-0 text-md">{{ $d->judul }}</h6>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex px-2">
+                                    <div class="my-auto">
+                                        <h6 class="mb-0 text-md">{{ $d->tampilan == 2 ? 'Gambar dikanan' : 'Gambar dikiri' }}</h6>
                                     </div>
                                 </div>
                             </td>
@@ -202,15 +226,16 @@
                                     <span class="btn-inner--icon"><i class="fas fa-trash me-2"></i>delete</span>
                                 </button>
                                 @if ($d->status == '1')
-                                <button wire:click="hide({{ $d->id }})"
-                                    class="btn btn-link text-primary text-gradient" type="button">
-                                    <span class="btn-inner--icon"><i class="fas fa-eye-slash"></i>sembunyikan</span>
-                                </button>
+                                    <button wire:click="hide({{ $d->id }})"
+                                        class="btn btn-link text-primary text-gradient" type="button">
+                                        <span class="btn-inner--icon"><i
+                                                class="fas fa-eye-slash"></i>sembunyikan</span>
+                                    </button>
                                 @else
-                                <button wire:click="show({{ $d->id }})"
-                                    class="btn btn-link text-success text-gradient" type="button">
-                                    <span class="btn-inner--icon"><i class="fas fa-eye me-2"></i>tampilkan</span>
-                                </button>
+                                    <button wire:click="show({{ $d->id }})"
+                                        class="btn btn-link text-success text-gradient" type="button">
+                                        <span class="btn-inner--icon"><i class="fas fa-eye me-2"></i>tampilkan</span>
+                                    </button>
                                 @endif
                             </td>
                         </tr>

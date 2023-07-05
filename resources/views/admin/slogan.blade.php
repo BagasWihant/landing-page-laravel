@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title','Admin Fitur')
+@section('title','Slogan')
 @section('content')
-@livewire('admin.fitur')
+@livewire('admin.slogan')
 @stack('script')
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title','Admin Fitur')
+@section('title','Gambar')
 @section('content')
-@livewire('admin.fitur')
+@livewire('admin.gambar-pemanis')
 @stack('script')
 @endsection

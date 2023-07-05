@@ -2,6 +2,6 @@
 
 @section('title','Admin Fitur')
 @section('content')
-@livewire('admin.fitur')
+@livewire('admin.kategori')
 @stack('script')
 @endsection
