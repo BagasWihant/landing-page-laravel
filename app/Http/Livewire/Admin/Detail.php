@@ -71,6 +71,11 @@ class Detail extends Component
 
     public function simpanAksi()
     {
+        $this->validate([
+            'image' => 'nullable|image',
+            'logo' => 'nullable|image',
+            'nama_website' => 'required',
+        ]);
         $gambar = '';
         if ($this->image != null) {
             $gambar = $this->image->storePublicly('upload/web', 'real_public');
@@ -117,6 +122,10 @@ class Detail extends Component
 
     public function updateAksi()
     {
+        $this->validate([
+            'image' => 'nullable|image',
+            'logo' => 'nullable|image',
+        ]);
         $parse1 = explode('src="', $this->maps);
         $mapsfix = '';
         if (isset($parse1[1])) {
