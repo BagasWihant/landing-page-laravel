@@ -116,6 +116,62 @@
             </div>
 
             <div class="container-fluid">
+                <h4 class="m-3 text-gradient-info text-info">Custom style</h4>
+                <div class="card">
+                    <div class="container">
+
+                        <div class="row my-3">
+                            <div class="col-md-3">
+                                <h6>Warna Background Atas</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <div style="background-color: {{ $back_color_atas }};" class="border shadow-lg">
+                                    <h4 style="color: {{ $back_color_atas }};">Warna default</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col-md-3">
+                                <h6>Warna Font Atas</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <div style="background-color: {{ $font_color_atas }};" class="bordered shadow-lg">
+                                    <h4 style="color: {{ $font_color_atas }};">Warna default</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col-md-3">
+                                <h6>Warna Background Footer</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <div style="background-color: {{ $back_color_foot }};" class="border shadow-lg">
+                                    <h4 style="color: {{ $back_color_foot }};">Warna default</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col-md-3">
+                                <h6>Warna Font Footer</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <div style="background-color: {{ $font_color_foot }};" class="border shadow-lg">
+                                    <h4 style="color: {{ $font_color_foot }};">Warna default</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="container-fluid">
                 <h4 class="m-3 text-gradient-primary text-primary">Sosial Media</h4>
                 <div class="card">
                     <div class="container">
@@ -344,6 +400,62 @@
             </div>
 
             <div class="container-fluid">
+                <h4 class="m-3 text-gradient-info text-info">Custom style</h4>
+                <div class="card">
+                    <div class="container">
+
+                        <div class="row my-3">
+                            <div class="col-md-3">
+                                <h6>Warna Background Atas</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="color" id="back_color_atas" wire:model="back_color_atas"
+                                    class="form-control @error('back_color_atas') is-invalid @enderror" required autocomplete="back_color_atas"
+                                    aria-label="back_color_atas">
+                            </div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col-md-3">
+                                <h6>Warna Font Atas</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="color" id="font_color_atas" wire:model="font_color_atas"
+                                    class="form-control @error('font_color_atas') is-invalid @enderror" required autocomplete="font_color_atas"
+                                    aria-label="font_color_atas">
+                            </div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col-md-3">
+                                <h6>Warna Background Footer</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="color" id="back_color_foot" wire:model="back_color_foot"
+                                    class="form-control @error('back_color_foot') is-invalid @enderror" required autocomplete="back_color_foot"
+                                    aria-label="back_color_foot">
+                            </div>
+                        </div>
+
+                        <div class="row my-3">
+                            <div class="col-md-3">
+                                <h6>Warna Font Footer</h6>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="color" id="font_color_foot" wire:model="font_color_foot"
+                                    class="form-control @error('font_color_foot') is-invalid @enderror" required autocomplete="font_color_foot"
+                                    aria-label="font_color_foot">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="container-fluid">
                 <h4 class="m-3 text-gradient-info text-info">Sosial Media</h4>
                 <div class="card">
                     <div class="container">
@@ -359,7 +471,7 @@
                             <div class="col-md-9">
                                 <input type="text" id="fb" wire:model="fb"
                                     class="form-control @error('fb') is-invalid @enderror" required autocomplete="fb"
-                                    autofocus placeholder="Facebook (Optional)" aria-label="fb">
+                                    aria-label="fb" autofocus placeholder="Facebook (Optional)">
                             </div>
                         </div>
 
@@ -411,6 +523,7 @@
 
                 </div>
             </div>
+
 
             <div class="container-fluid  my-3">
                 @if ($firstData)

@@ -101,7 +101,13 @@ html{
     }
 }
 @media only screen and (min-width: 992px)  {
+
+.show-992{
+    display: none !important;
+}
+}
+@media only screen and (max-width: 992px)  {
 .hide-992{
-    display: flex !important;
+    display: none !important;
 }
 }

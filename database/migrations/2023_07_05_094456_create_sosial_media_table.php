@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('sosial_media', function (Blueprint $table) {
             $table->id();
-            $table->string('app');
-            $table->string('link');
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('youtube')->nullable();
+            $table->string('twiter')->nullable();
+            $table->string('wa')->nullable();
+            $table->string('playstore')->nullable();
             $table->timestamps();
         });
     }

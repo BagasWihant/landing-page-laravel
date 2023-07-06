@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('logo_web')->nullable();
             $table->text('maps')->nullable();
             $table->text('about_us')->nullable();
+            $table->text('back_color_atas')->nullable();
+            $table->text('font_color_atas')->nullable();
+            $table->text('back_color_foot')->nullable();
+            $table->text('font_color_foot')->nullable();
 
             $table->timestamps();
         });
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('informasi_atas');
+        Schema::dropIfExists('informasi');
     }
 };

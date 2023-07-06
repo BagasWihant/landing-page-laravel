@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
-
+    <title>{{ isset($info->nama_website) ? $info->nama_website : 'Title' }}</title>
+    <link rel="shortcut icon" href="{{ isset($info->logo_web) ? $info->logo_web : '' }}" type="image/x-icon">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
@@ -19,6 +19,21 @@
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery-3.7.0.min.js.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <style>
+        .back_color_atas {
+            background-color: {{ isset($info->back_color_atas) ? $info->back_color_atas : '#fbcf33' }};
+        }
+        .font_color_atas{
+            color: {{ isset($info->font_color_atas) ? $info->font_color_atas : '#fff' }};
+
+        }
+        .font_color_foot{
+            color: {{ isset($info->font_color_foot) ? $info->font_color_foot : '#fff' }};
+        }
+        .back_color_foot{
+            background-color: {{ isset($info->back_color_foot) ? $info->back_color_foot : '#344767' }};
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show">
@@ -26,15 +41,15 @@
 
     <main class="main-content position-relative max-height-vh-100 ">
         {{-- Tampilan pertama --}}
-        <section class="bg-warning">
+        <section class="back_color_atas">
 
-            <nav class="navbar shadow-none navbar-expand-lg bg-warning px-0 mx-4">
+            <nav class="navbar shadow-none navbar-expand-lg  px-0 mx-4">
                 <div class="container-fluid">
                     <div class="navbar-brand bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5 d-flex">
                         <img src="{{ isset($info->logo_web) ? $info->logo_web : 'https://gas.id/files/images/srvphp_1662943062.png' }}"
                             class="navbar-brand-img">
                         <span
-                            class="h2 m-0 align-items-center d-flex">{{ isset($info->nama_website) ? $info->nama_website : 'Title' }}</span>
+                            class="h2 m-0 align-items-center d-flex font_color_atas">{{ isset($info->nama_website) ? $info->nama_website : 'Title' }}</span>
                     </div>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,33 +60,39 @@
                     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul class="navbar-nav align-items-center">
                             <li class="nav-item">
-                                <a class="h6 mx-3 text-uppercase active" aria-current="page" href="#">Home</a>
+                                <a class="h6 mx-3 text-uppercase active" aria-current="page" href="#home">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="h6 mx-3 text-uppercase" href="#">fitur</a>
+                                <a class="h6 mx-3 text-uppercase" href="#fitur">fitur</a>
                             </li>
                             <li class="nav-item">
-                                <a class="h6 mx-3 text-uppercase" href="#">kategori</a>
+                                <a class="h6 mx-3 text-uppercase" href="#kategori">kategori</a>
                             </li>
+                            @if (isset($info->maps))
+                                <li class="nav-item">
+                                    <a class="h6 mx-3 text-uppercase" href="#lokasi">lokasi</a>
+                                </li>
+                            @endif
                             <li class="nav-item">
-                                <a class="h6 mx-3 text-uppercase">lokasi</a>
+                                <a class="h6 mx-3 text-uppercase" href="#about">about</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="h6 mx-3 text-uppercase">about</a>
+                            <li class="nav-item show-992">
+                                <a href="{{ route('login') }}"
+                                    class="btn btn-sm bg-gradient-secondary btn-secondary">masuk</a>
                             </li>
                         </ul>
                     </div>
-                    <div class="float-end">
+                    <div class="hide-992">
                         <a href="{{ route('login') }}" class="btn btn-sm bg-gradient-secondary btn-secondary">masuk</a>
                     </div>
                 </div>
             </nav>
 
-            <div class=" container py-4">
+            <div class=" container py-4" id="home">
                 <div class="d-flex flex-row">
                     <div class="d-flex align-items-center row flex-reverse">
                         <div class="col-md-6 text-left">
-                            <h1 class="text-white">{{ isset($info->title) ? $info->title : 'Judul utama' }}</h1>
+                            <h1 class="font_color_atas">{{ isset($info->title) ? $info->title : 'Judul utama' }}</h1>
                             <span
                                 class="text-dark">{{ isset($info->deskripsi) ? $info->deskripsi : 'Deskripsi Judul utama' }}</span>
                         </div>
@@ -83,17 +104,18 @@
                 </div>
 
                 <div class="icon py-5">
-                    @foreach ($sosmed as $sm)
-                        @if ($sm->app == 'fb' && $sm->link !== '')
-                            <a class="uil uil-facebook h3 mx-1 text-white " href="{{ $sm->link }}"></a>
-                        @elseif ($sm->app == 'twt' && $sm->link !== '')
-                            <a class="uil uil-twitter h3 mx-1 text-white " href="{{ $sm->link }}"></a>
-                        @elseif ($sm->app == 'yt' && $sm->link !== '')
-                            <a class="uil uil-youtube h3 mx-1 text-white " href="{{ $sm->link }}"></a>
-                        @elseif($sm->app == 'ig' && $sm->link !== '')
-                            <a class="uil uil-instagram h3 mx-1 text-white" href="{{ $sm->link }}"></a>
-                        @endif
-                    @endforeach
+                    @if (isset($sosmed->facebook))
+                        <a class="uil uil-facebook h3 mx-1 text-white " href="{{ $sosmed->facebook }}"></a>
+                    @endif
+                    @if (isset($sosmed->twitter))
+                        <a class="uil uil-twitter h3 mx-1 text-white " href="{{ $sosmed->twitter }}"></a>
+                    @endif
+                    @if (isset($sosmed->youtube))
+                        <a class="uil uil-youtube h3 mx-1 text-white " href="{{ $sosmed->youtube }}"></a>
+                    @endif
+                    @if (isset($sosmed->instagram))
+                        <a class="uil uil-instagram h3 mx-1 text-white" href="{{ $sosmed->instagram }}"></a>
+                    @endif
                 </div>
             </div>
         </section>
@@ -130,7 +152,7 @@
 
                 <div class="list-group overflow-auto list-group-horizontal d-flex justify-content-center">
                     @foreach ($kategori as $k)
-                        <div class="col-md-2  mx-3 d-flex align-items-stretch">
+                        <div class="col-md-4 col-lg-3  mx-3 d-flex align-items-stretch">
                             <div class="card my-3 shadow-md">
                                 <div class="card-header">
                                     <img src="{{ $k->gambar }}" class="img-fluid img-card-fitur">
@@ -148,11 +170,14 @@
             </div>
         </section>
 
-        <section  class="container py-8">
+        <section class="container py-8" id="">
             @foreach ($gambar as $img)
-                <div data-aos="{{ $loop->even ? 'zoom-out-up' : 'zoom-in-right' }}" data-aos-delay="600" data-aos-duration="3000" class="d-flex flex-row py-6">
-                    <div class="d-flex align-items-center row flex-reverse {{ $img->tampilan == 1 ? 'flex-row-reverse' : '' }}">
-                        <div class="col-md-6 d-flex {{ $img->tampilan == 1 ? 'justify-content-end' : 'justify-content-start' }}">
+                <div data-aos="{{ $loop->even ? 'zoom-out-up' : 'zoom-in-right' }}" data-aos-delay="600"
+                    data-aos-duration="3000" class="d-flex flex-row py-6">
+                    <div
+                        class="d-flex align-items-center row flex-reverse {{ $img->tampilan == 1 ? 'flex-row-reverse' : '' }}">
+                        <div
+                            class="col-md-6 d-flex {{ $img->tampilan == 1 ? 'justify-content-end' : 'justify-content-start' }}">
                             <span class="text-dark h1">{{ $img->judul ? $img->judul : 'Judul utama' }}</span>
                         </div>
                         <div class="col-md-6">
@@ -165,7 +190,8 @@
         </section>
 
         @if (isset($info->maps))
-            <section id="lokasi" data-aos="zoom-in-up" data-aos-duration="3000" data-aos-delay="600"  class="py-9 text-center container">
+            <section id="lokasi" data-aos="zoom-in-up" data-aos-duration="3000" data-aos-delay="600"
+                class="py-9 text-center container">
                 <h2 class="text-uppercase">lokasi kami</h2>
                 <div class="ratio ratio-21x9 ">
 
@@ -176,15 +202,17 @@
             </section>
         @endif
 
-        <section id='about' data-aos="zoom-in-down" data-aos-delay="600" data-aos-duration="3000" class="text-center container py-9">
+        <section id='about' data-aos="zoom-in-down" data-aos-delay="600" data-aos-duration="3000"
+            class="text-center container py-9">
             <h2 class="text-uppercase">Tentang Kami</h2>
             <span>{{ isset($info->about_us) ? $info->about_us : 'Deskripsikan Perusahaan anda' }}</span>
 
         </section>
 
-        <section id='kata' data-aos="zoom-in-right" data-aos-duration="3000" class="text-center container py-9">
-            <h2 class="text-uppercase">{{ $slogan->judul ? $slogan->judul : 'Isi Slogannya' }}</h2>
-            <span>{{ $slogan->text ? $slogan->text : 'Isi deskripsi Slogannya' }}</span>
+        <section id='kata' data-aos="zoom-in-right" data-aos-duration="3000"
+            class="text-center container py-9">
+            <h2 class="text-uppercase">{{ isset($slogan->judul) ? $slogan->judul : 'Isi Slogannya' }}</h2>
+            <span>{{ isset($slogan->text) ? $slogan->text : 'Isi deskripsi Slogannya' }}</span>
 
         </section>
 
@@ -211,7 +239,7 @@
             </div>
         </section>
 
-        <section class="bg-dark">
+        <section class="back_color_foot font_color_foot">
             {{-- <div class="container">
                 <footer class="row row-cols-5 py-5 my-5 border-top">
 
@@ -313,18 +341,20 @@
                                 <!-- Links -->
                                 <h6 class="text-uppercase mb-3 text-white">Follow Kami</h6>
 
-                                @foreach ($sosmed as $sm)
-                                    @if ($sm->app == 'fb' && $sm->link !== '')
-                                        <a class="uil uil-facebook h3 text-info " href="{{ $sm->link }}"></a>
-                                    @elseif ($sm->app == 'twt' && $sm->link !== '')
-                                        <a class="uil uil-twitter h3 text-info " href="{{ $sm->link }}"></a>
-                                    @elseif ($sm->app == 'yt' && $sm->link !== '')
-                                        <a class="uil uil-youtube h3 text-danger " href="{{ $sm->link }}"></a>
-                                    @elseif($sm->app == 'ig' && $sm->link !== '')
-                                        <a class="uil uil-instagram h3 text-primary text-gradient"
-                                            href="{{ $sm->link }}"></a>
-                                    @endif
-                                @endforeach
+                                @if (isset($sosmed->facebook))
+                                    <a class="uil uil-facebook h3 mx-1 text-white "
+                                        href="{{ $sosmed->facebook }}"></a>
+                                @endif
+                                @if (isset($sosmed->twitter))
+                                    <a class="uil uil-twitter h3 mx-1 text-white " href="{{ $sosmed->twitter }}"></a>
+                                @endif
+                                @if (isset($sosmed->youtube))
+                                    <a class="uil uil-youtube h3 mx-1 text-white " href="{{ $sosmed->youtube }}"></a>
+                                @endif
+                                @if (isset($sosmed->instagram))
+                                    <a class="uil uil-instagram h3 mx-1 text-white"
+                                        href="{{ $sosmed->instagram }}"></a>
+                                @endif
                             </div>
                             <!-- Grid column -->
 
@@ -332,9 +362,9 @@
                             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 ">
                                 <!-- Links -->
                                 <h6 class="text-uppercase mb-3 text-white">Download</h6>
-                                <span>
+                                <a href="{{ isset($sosmed->playstore) ? $sosmed->playstore : '#' }}">
                                     <img src="{{ asset('assets/img/google-play.png') }}" class="img-fluid">
-                                </span>
+                                </a>
                             </div>
                             <!-- Grid column -->
                         </div>
@@ -355,8 +385,8 @@
     </main>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-          AOS.init();
-        </script>
+        AOS.init();
+    </script>
 </body>
 
 </html>

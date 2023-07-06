@@ -14,7 +14,8 @@ use Illuminate\Http\Request;
 class AksesPublic extends Controller
 {
     public function index(){
-        $sosmed = SosialMedia::get();
+        $sosmed = SosialMedia::first();
+
         $slogan = Slogan::first();
         $info = InformasiAtas::first();
         $fitur = Fitur::where('status',1)->get();
